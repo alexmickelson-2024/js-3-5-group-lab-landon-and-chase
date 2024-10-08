@@ -1,14 +1,12 @@
 import { bookList } from "./books.js";
 
+const tableBodyElement = document.getElementById("myTableBody")
 const fliterInputElement = document.getElementById("filterInput")
-var filteredBookList;
 
-const setFilter = () => {
-  console.log(fliterInputElement.value)
-  filteredBookList = 
-}
-
-fliterInputElement.addEventListener("input", setFilter);
+fliterInputElement.addEventListener("input", () => {
+  tableBodyElement.replaceChildren()
+    drawBooks(bookList.filter((book) =>  book.title.toLowerCase().includes(fliterInputElement.value.toLowerCase()) || book.author.toLowerCase().includes(fliterInputElement.value.toLowerCase()) || book.summary.toLowerCase().includes(fliterInputElement.value.toLowerCase())))
+});
 
 const drawBooks = (books) => {
   const bookNode = (book) => {
@@ -42,17 +40,10 @@ const drawBooks = (books) => {
   //   </tr>
 
 
-  const tableBodyElement = document.getElementById("myTableBody")
 
   books.forEach(book => {
     tableBodyElement.append(bookNode(book))
   })
 }
 
-console.log(filteredBookList);
-
-if (filteredBookList)
-  drawBooks(filteredBookList)
-
-else
-  drawBooks(bookList)
+drawBooks(bookList)
